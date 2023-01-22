@@ -6,6 +6,9 @@
 #include "../Cell/Cell.hpp"
 #include "../CellularAutomaton/CellularAutomaton.hpp"
 
+typedef std::function<Cell::State(const Cell&, const CellularAutomaton&)> LambdaRuleFunction;
+typedef std::function<bool()> LambdaForceRuleFunction;
+
 class LambdaBasedRule: public IRule
 {
 protected:
@@ -13,10 +16,10 @@ protected:
   std::function<bool()> forceRule;
 
 public:
-  LambdaBasedRule(std::function<Cell::State(const Cell&, const CellularAutomaton&)> apply): LambdaBasedRule{apply, []() { return false; }} {}
+  LambdaBasedRule(LambdaRuleFunction apply): LambdaBasedRule{apply, []() { return false; }} {}
   LambdaBasedRule(
-    std::function<Cell::State(const Cell&, const CellularAutomaton&)> apply,
-    std::function<bool()> force
+    LambdaRuleFunction apply,
+    LambdaForceRuleFunction force
   ): application(apply), forceRule(force) {}
 
   Cell::State apply(const Cell& c, const CellularAutomaton& aut) override {
