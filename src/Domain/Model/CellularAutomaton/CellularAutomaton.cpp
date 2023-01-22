@@ -57,4 +57,5 @@ void CellularAutomaton::applyNewStates(const std::vector<std::vector<Cell::State
 void CellularAutomaton::update() {
   auto newStates = getNewStates();
   applyNewStates(newStates);
+  ++iteration_;
 }
