@@ -18,17 +18,21 @@
 
 #include <iostream>
 #include <memory>
+#include <stdlib.h>
+#include <chrono>
+#include <thread>
 #include "Domain/Model/Cell/Cell.hpp"
 #include "Domain/Model/CellularAutomaton/CellularAutomaton.hpp"
 #include "Domain/Model/CellularAutomatonPrinter/CellularAutomatonPrinter.hpp"
 #include "Domain/Model/Rule/Rule.hpp"
 #include "Domain/Model/Rule/LambdaBasedRule.hpp"
+#include "Domain/Model/Topology/TorusTopology.hpp"
+#include "Domain/Model/Rule/ConwaysRule.hpp"
 
 int main() {
-  CellularAutomaton c;
+  TorusTopology top;
+  CellularAutomaton c{top, 256};
   CellularAutomatonPrinter cp{c};
-
-  std::cout << cp << "--------------------------------------------------\n" << std::endl;
 
   LambdaBasedRule killEverything{
       [](const Cell& c, const CellularAutomaton& aut) {
@@ -52,16 +56,19 @@ int main() {
       }
   };
 
-  c
-    .addRule(std::make_shared<LambdaBasedRule>(forceEveryThingToLiveAfter10Generations))
-    .addRule(std::make_shared<LambdaBasedRule>(killEverything));
+  c.addRule(std::make_shared<ConwaysRule>());
+    // .addRule(std::make_shared<LambdaBasedRule>(forceEveryThingToLiveAfter10Generations))
+    // .addRule(std::make_shared<LambdaBasedRule>(killEverything));
 
-  int i = 0;
+  // int i = 0;
 
-  while (i < 14) {
+  std::cout << cp;
+  while (true) {
     c.update();
-    std::cout << cp << "--------------------------------------------------\n" << std::endl;
-    ++i;
+    // ++i;
+    // system("clear"); //FIXME: This is not very portable!
+    std::cout << cp;
+    // std::this_thread::sleep_for(std::chrono::milliseconds(0));
   }
 
   return 0;

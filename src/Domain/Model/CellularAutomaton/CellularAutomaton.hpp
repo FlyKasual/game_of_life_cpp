@@ -20,27 +20,30 @@
 
 #include <vector>
 #include <memory>
+#include <array>
 #include "../Cell/Cell.hpp"
 #include "../Rule/Rule.hpp"
+#include "../Topology/Topology.hpp"
 
 class CellularAutomaton {
 protected:
-  std::size_t width_;
-  std::size_t height_;
+  ITopology& topology_;
+  int width_;
+  int height_;
   std::vector<std::vector<Cell>> grid_;
-  std::size_t iteration_ = 0;
+  int iteration_ = 0;
   std::vector<std::shared_ptr<IRule>> rules;
 
   std::vector<std::vector<Cell::State>> getNewStates();
   void applyNewStates(const std::vector<std::vector<Cell::State>>& newStates);
 public:
-  CellularAutomaton(std::size_t width = 40, std::size_t height = 40);
+  CellularAutomaton(ITopology&, int width = 40, int height = 40);
 
-  std::size_t getWidth() const {
+  int getWidth() const {
     return width_;
   }
 
-  std::size_t getHeight() const {
+  int getHeight() const {
     return height_;
   }
 
@@ -48,12 +51,15 @@ public:
     return grid_;
   }
 
-  std::size_t getIteration() const {
+  int getIteration() const {
     return iteration_;
   }
 
+  NeighborStates getNeighborStates(const Cell&) const;
+
   CellularAutomaton& addRule(std::shared_ptr<IRule>);
   void update();
+  std::array<int, 2> getPosition(const Cell&) const;
 };
 
 #endif
