@@ -1,6 +1,6 @@
 /*!
  * @copyright
- * Copyright 2023 Johannes Nielsen <flykasual@gmail.com
+ * Copyright 2023 Johannes Nielsen <flykasual@gmail.com>
  */
 /*!
  * This file is part of the game_of_life_cpp project.
