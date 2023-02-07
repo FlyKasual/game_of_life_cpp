@@ -15,31 +15,8 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __CELL_H
-#define __CELL_H
+#include "Cell.hpp"
 
-class Cell {
-public:
-  enum class State {
-    ALIVE,
-    DEAD
-  };
-  Cell(): Cell{State::DEAD} {}
-  Cell(Cell::State state): state_(state) {}
-
-  State getState() const {
-    return state_;
-  }
-
-  Cell& setState(State state) {
-    state_ = state;
-
-    return *this;
-  }
-protected:
-  State state_;
-};
-
-bool operator==(const Cell&, const Cell&);
-
-#endif
+bool operator==(const Cell& lhs, const Cell& rhs) {
+  return &lhs == &rhs;
+}
