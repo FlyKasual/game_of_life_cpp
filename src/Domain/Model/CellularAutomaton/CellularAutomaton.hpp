@@ -21,6 +21,7 @@
 #include <vector>
 #include <memory>
 #include <array>
+#include <map>
 #include "../Cell/Cell.hpp"
 #include "../Rule/Rule.hpp"
 #include "../Topology/Topology.hpp"
@@ -34,6 +35,7 @@ protected:
   std::shared_ptr<std::vector<std::vector<Cell>>> tmpGrid_;
   int iteration_ = 0;
   std::vector<std::shared_ptr<IRule>> rules;
+  std::map<const Cell* const, std::array<int, 2>> positionCache_;
 public:
   CellularAutomaton(ITopology&, int width = 40, int height = 40);
 

@@ -18,6 +18,7 @@
 #include <random>
 #include <memory>
 #include <array>
+#include <map>
 #include "CellularAutomaton.hpp"
 #include "../Rule/Rule.hpp"
 #include "../Topology/Topology.hpp"
@@ -46,6 +47,8 @@ CellularAutomaton::CellularAutomaton(ITopology& topology, int width, int height)
       std::uniform_int_distribution<> distr(0, 100);
       Cell::State state{ distr(gen) > 90 ? Cell::State::ALIVE : Cell::State::DEAD };
       grid_->at(i).at(j).setState(state);
+      positionCache_[&grid_->at(i).at(j)] = std::array{i, j};
+      positionCache_[&tmpGrid_->at(i).at(j)] = std::array{i, j};
     }
   }
 }
@@ -78,12 +81,9 @@ NeighborStates CellularAutomaton::getNeighborStates(const Cell& cell) const {
 }
 
 std::array<int, 2> CellularAutomaton::getPosition(const Cell& c) const {
-  for (int i = 0; i < height_; ++i) {
-    for (int j = 0; j < width_; ++j) {
-      if (grid_->at(i).at(j) == c)
-        return std::array{i, j};
-    }
-  }
+  auto position{positionCache_.find(&c)};
+  if (position != positionCache_.end())
+    return position->second;
 
   // TODO: Should we throw here if c is not in this automaton?
   return std::array{-1, -1};

@@ -22,17 +22,19 @@
 #include "../CellularAutomaton/CellularAutomaton.hpp"
 
 NeighborStates TorusTopology::getNeighbors(const Cell& c, const CellularAutomaton& ca) const {
-  NeighborStates ns;
   std::array<int, 2> pos{ca.getPosition(c)};
-
-  ns.NW = ca.getGrid()->at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
-  ns.N = ca.getGrid()->at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at(pos[1]).getState();
-  ns.NE = ca.getGrid()->at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
-  ns.W = ca.getGrid()->at(pos[0]).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
-  ns.E = ca.getGrid()->at(pos[0]).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
-  ns.SW = ca.getGrid()->at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
-  ns.S = ca.getGrid()->at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at(pos[1]).getState();
-  ns.SE = ca.getGrid()->at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
-
-  return ns;
+  int n{(pos[0] + ca.getHeight() - 1) % ca.getHeight()};
+  int w{(pos[1] + ca.getWidth() - 1) % ca.getWidth()};
+  int e{(pos[1] + ca.getWidth() + 1) % ca.getWidth()};
+  int s{(pos[0] + ca.getHeight() + 1) % ca.getHeight()};
+  return NeighborStates {
+    ca.getGrid()->at(n).at(w).getState(),
+    ca.getGrid()->at(n).at(pos[1]).getState(),
+    ca.getGrid()->at(n).at(e).getState(),
+    ca.getGrid()->at(pos[0]).at(w).getState(),
+    ca.getGrid()->at(pos[0]).at(e).getState(),
+    ca.getGrid()->at(s).at(w).getState(),
+    ca.getGrid()->at(s).at(pos[1]).getState(),
+    ca.getGrid()->at(s).at(e).getState()
+  };
 }
