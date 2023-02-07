@@ -21,7 +21,7 @@
 #include "../CellularAutomaton/CellularAutomaton.hpp"
 
 std::ostream& operator<<(std::ostream &os, const CellularAutomatonPrinter& cap) {
-  for (const auto& row : cap.ca.getGrid()) {
+  for (const auto& row : *(cap.ca.getGrid())) {
     for (const auto& cell : row) {
       switch (cell.getState()) {
         case Cell::State::ALIVE:

@@ -23,19 +23,29 @@
 #include "../Topology/Topology.hpp"
 
 CellularAutomaton::CellularAutomaton(ITopology& topology, int width, int height): topology_(topology), width_(width), height_(height) {
-  grid_.resize(height_);
-  for (auto row : grid_) {
-    row.resize(width_);
-  }
-
+  grid_ = std::make_shared<std::vector<std::vector<Cell>>>(
+    std::vector<std::vector<Cell>>(
+      height,
+      std::vector<Cell>(width)
+    )
+  );
+  tmpGrid_ = std::make_shared<std::vector<std::vector<Cell>>>(
+    std::vector<std::vector<Cell>>(
+      height,
+      std::vector<Cell>(
+        width,
+        Cell{Cell::State::DEAD}
+      )
+    )
+  );
   std::random_device rd;
   std::mt19937 gen(rd());
 
   for (int i = 0; i < height_; ++i) {
     for (int j = 0; j < width_; ++j) {
       std::uniform_int_distribution<> distr(0, 100);
-      Cell::State state{ distr(gen) > 99 ? Cell::State::ALIVE : Cell::State::DEAD };
-      grid_.at(i).push_back(Cell{ state });
+      Cell::State state{ distr(gen) > 90 ? Cell::State::ALIVE : Cell::State::DEAD };
+      grid_->at(i).at(j).setState(state);
     }
   }
 }
@@ -45,15 +55,13 @@ CellularAutomaton& CellularAutomaton::addRule(std::shared_ptr<IRule> rule) {
   return *this;
 }
 
-std::vector<std::vector<Cell::State>> CellularAutomaton::getNewStates() {
-  std::vector<std::vector<Cell::State>> newStates;
-  newStates.resize(height_);
+void CellularAutomaton::update() {
   for (int i = 0; i < height_; ++i) {
-    newStates.push_back(std::vector<Cell::State>());
-    newStates.at(i).resize(width_);
     for (int j = 0; j < width_; ++j) {
       for (auto& rule : rules) {
-        newStates.at(i).at(j) = (*rule).apply(grid_.at(i).at(j), *this);
+        tmpGrid_->at(i).at(j).setState(
+          (*rule).apply(grid_->at(i).at(j), *this)
+        );
 
         if ((*rule).enforce() == true) {
           break;
@@ -61,21 +69,7 @@ std::vector<std::vector<Cell::State>> CellularAutomaton::getNewStates() {
       }
     }
   }
-
-  return newStates;
-}
-
-void CellularAutomaton::applyNewStates(const std::vector<std::vector<Cell::State>>& newStates) {
-  for (int i = 0; i < height_; ++i) {
-    for (int j = 0; j < width_; ++j) {
-      grid_.at(i).at(j).setState(newStates.at(i).at(j));
-    }
-  }
-};
-
-void CellularAutomaton::update() {
-  auto newStates = getNewStates();
-  applyNewStates(newStates);
+  grid_.swap(tmpGrid_);
   ++iteration_;
 }
 
@@ -86,7 +80,7 @@ NeighborStates CellularAutomaton::getNeighborStates(const Cell& cell) const {
 std::array<int, 2> CellularAutomaton::getPosition(const Cell& c) const {
   for (int i = 0; i < height_; ++i) {
     for (int j = 0; j < width_; ++j) {
-      if (&grid_.at(i).at(j) == &c)
+      if (grid_->at(i).at(j) == c)
         return std::array{i, j};
     }
   }

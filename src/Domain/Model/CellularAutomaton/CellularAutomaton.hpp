@@ -30,12 +30,10 @@ protected:
   ITopology& topology_;
   int width_;
   int height_;
-  std::vector<std::vector<Cell>> grid_;
+  std::shared_ptr<std::vector<std::vector<Cell>>> grid_;
+  std::shared_ptr<std::vector<std::vector<Cell>>> tmpGrid_;
   int iteration_ = 0;
   std::vector<std::shared_ptr<IRule>> rules;
-
-  std::vector<std::vector<Cell::State>> getNewStates();
-  void applyNewStates(const std::vector<std::vector<Cell::State>>& newStates);
 public:
   CellularAutomaton(ITopology&, int width = 40, int height = 40);
 
@@ -47,7 +45,7 @@ public:
     return height_;
   }
 
-  std::vector<std::vector<Cell>> getGrid() const {
+  std::shared_ptr<std::vector<std::vector<Cell>>> getGrid() const {
     return grid_;
   }
 

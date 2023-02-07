@@ -25,14 +25,14 @@ NeighborStates TorusTopology::getNeighbors(const Cell& c, const CellularAutomato
   NeighborStates ns;
   std::array<int, 2> pos{ca.getPosition(c)};
 
-  ns.NW = ca.getGrid().at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
-  ns.N = ca.getGrid().at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at(pos[1]).getState();
-  ns.NE = ca.getGrid().at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
-  ns.W = ca.getGrid().at(pos[0]).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
-  ns.E = ca.getGrid().at(pos[0]).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
-  ns.SW = ca.getGrid().at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
-  ns.S = ca.getGrid().at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at(pos[1]).getState();
-  ns.SW = ca.getGrid().at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
+  ns.NW = ca.getGrid()->at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
+  ns.N = ca.getGrid()->at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at(pos[1]).getState();
+  ns.NE = ca.getGrid()->at((pos[0] + ca.getHeight() - 1) % ca.getHeight()).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
+  ns.W = ca.getGrid()->at(pos[0]).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
+  ns.E = ca.getGrid()->at(pos[0]).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
+  ns.SW = ca.getGrid()->at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at((pos[1] + ca.getWidth() - 1) % ca.getWidth()).getState();
+  ns.S = ca.getGrid()->at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at(pos[1]).getState();
+  ns.SE = ca.getGrid()->at((pos[0] + ca.getHeight() + 1) % ca.getHeight()).at((pos[1] + ca.getWidth() + 1) % ca.getWidth()).getState();
 
   return ns;
 }
