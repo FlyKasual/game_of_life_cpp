@@ -31,7 +31,7 @@
 
 int main() {
   TorusTopology top;
-  CellularAutomaton c{top, 256};
+  CellularAutomaton c{top};
   CellularAutomatonPrinter cp{c};
 
   LambdaBasedRule killEverything{

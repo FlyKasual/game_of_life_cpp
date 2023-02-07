@@ -36,5 +36,6 @@ std::ostream& operator<<(std::ostream &os, const CellularAutomatonPrinter& cap) 
     }
     os << '\n';
   }
+  os << cap.ca.getIteration()<< '\n';
   return os;
 }
