@@ -35,7 +35,7 @@ CellularAutomaton::CellularAutomaton(ITopology& topology, int width, int height)
       height,
       std::vector<Cell>(
         width,
-        Cell{Cell::State::DEAD}
+        Cell{Cell::DEAD}
       )
     )
   );
@@ -45,7 +45,7 @@ CellularAutomaton::CellularAutomaton(ITopology& topology, int width, int height)
   for (int i = 0; i < height_; ++i) {
     for (int j = 0; j < width_; ++j) {
       std::uniform_int_distribution<> distr(0, 100);
-      Cell::State state{ distr(gen) > 90 ? Cell::State::ALIVE : Cell::State::DEAD };
+      Cell::State state{ distr(gen) > 90 ? Cell::ALIVE : Cell::DEAD };
       grid_->at(i).at(j).setState(state);
       positionCache_[&grid_->at(i).at(j)] = std::array{i, j};
       positionCache_[&tmpGrid_->at(i).at(j)] = std::array{i, j};

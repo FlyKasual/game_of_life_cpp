@@ -24,10 +24,10 @@ std::ostream& operator<<(std::ostream &os, const CellularAutomatonPrinter& cap) 
   for (const auto& row : *(cap.ca.getGrid())) {
     for (const auto& cell : row) {
       switch (cell.getState()) {
-        case Cell::State::ALIVE:
+        case Cell::ALIVE:
           os << "*";
           break;
-        case Cell::State::DEAD:
+        case Cell::DEAD:
           os << " ";
           break;
         default:

@@ -36,13 +36,13 @@ int main() {
 
   LambdaBasedRule killEverything{
       [](const Cell& c, const CellularAutomaton& aut) {
-          return Cell::State::DEAD;
+          return Cell::DEAD;
       },
       []() { return true; }
   };
 
   bool force = false;
-  Cell::State forcedState = Cell::State::ALIVE;
+  Cell::State forcedState = Cell::ALIVE;
 
   LambdaBasedRule forceEveryThingToLiveAfter10Generations{
       [&forcedState, &force](const Cell& c, const CellularAutomaton& aut) {

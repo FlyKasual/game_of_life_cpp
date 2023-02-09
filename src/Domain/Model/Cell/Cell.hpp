@@ -20,11 +20,11 @@
 
 class Cell {
 public:
-  enum class State {
+  enum State {
     ALIVE,
     DEAD
   };
-  Cell(): Cell{State::DEAD} {}
+  Cell(): Cell{DEAD} {}
   Cell(Cell::State state): state_(state) {}
 
   State getState() const {

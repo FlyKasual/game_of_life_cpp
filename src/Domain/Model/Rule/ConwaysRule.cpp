@@ -23,26 +23,26 @@
 Cell::State ConwaysRule::apply(const Cell& c, const CellularAutomaton& aut) {
   NeighborStates ns = aut.getNeighborStates(c);
   int numberOfLivingNeighbors = 0;
-  if (ns.NW == Cell::State::ALIVE)
+  if (ns.NW == Cell::ALIVE)
     ++numberOfLivingNeighbors;
-  if (ns.N == Cell::State::ALIVE)
+  if (ns.N == Cell::ALIVE)
     ++numberOfLivingNeighbors;
-  if (ns.NE == Cell::State::ALIVE)
+  if (ns.NE == Cell::ALIVE)
     ++numberOfLivingNeighbors;
-  if (ns.W == Cell::State::ALIVE)
+  if (ns.W == Cell::ALIVE)
     ++numberOfLivingNeighbors;
-  if (ns.E == Cell::State::ALIVE)
+  if (ns.E == Cell::ALIVE)
     ++numberOfLivingNeighbors;
-  if (ns.SW == Cell::State::ALIVE)
+  if (ns.SW == Cell::ALIVE)
     ++numberOfLivingNeighbors;
-  if (ns.S == Cell::State::ALIVE)
+  if (ns.S == Cell::ALIVE)
     ++numberOfLivingNeighbors;
-  if (ns.SE == Cell::State::ALIVE)
+  if (ns.SE == Cell::ALIVE)
     ++numberOfLivingNeighbors;
   if (numberOfLivingNeighbors == 3)
-    return Cell::State::ALIVE;
-  if (c.getState() == Cell::State::ALIVE && numberOfLivingNeighbors == 2) {
-    return Cell::State::ALIVE;
+    return Cell::ALIVE;
+  if (c.getState() == Cell::ALIVE && numberOfLivingNeighbors == 2) {
+    return Cell::ALIVE;
   }
-  return Cell::State::DEAD;
+  return Cell::DEAD;
 }
