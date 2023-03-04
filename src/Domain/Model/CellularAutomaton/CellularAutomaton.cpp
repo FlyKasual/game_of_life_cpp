@@ -63,10 +63,10 @@ void CellularAutomaton::update() {
     for (int j = 0; j < width_; ++j) {
       for (auto& rule : rules) {
         tmpGrid_->at(i).at(j).setState(
-          (*rule).apply(grid_->at(i).at(j), *this)
+          rule->apply(grid_->at(i).at(j), *this)
         );
 
-        if ((*rule).enforce() == true) {
+        if (rule->enforce() == true) {
           break;
         }
       }
