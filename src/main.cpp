@@ -27,48 +27,46 @@
 #include "Domain/Model/Rule/Rule.hpp"
 #include "Domain/Model/Rule/LambdaBasedRule.hpp"
 #include "Domain/Model/Topology/TorusTopology.hpp"
+#include "Domain/Model/Topology/KleinBottleTopology.hpp"
 #include "Domain/Model/Rule/ConwaysRule.hpp"
 
 int main() {
-  TorusTopology top;
-  CellularAutomaton c{top, 256};
+  KleinBottleTopology top;
+  CellularAutomaton c{top, 150};
   CellularAutomatonPrinter cp{c};
 
-  LambdaBasedRule killEverything{
-      [](const Cell& c, const CellularAutomaton& aut) {
-          return Cell::DEAD;
-      },
-      []() { return true; }
-  };
+  // LambdaBasedRule killEverything{
+  //     [](const Cell& c, const CellularAutomaton& aut) {
+  //         return Cell::DEAD;
+  //     },
+  //     []() { return true; }
+  // };
 
-  bool force = false;
-  Cell::State forcedState = Cell::ALIVE;
+  // bool force = false;
+  // Cell::State forcedState = Cell::ALIVE;
 
-  LambdaBasedRule forceEveryThingToLiveAfter10Generations{
-      [&forcedState, &force](const Cell& c, const CellularAutomaton& aut) {
-          if (aut.getIteration() >= 10) {
-              force = true;
-          }
-          return forcedState;
-      },
-      [&force]() {
-          return force;
-      }
-  };
+  // LambdaBasedRule forceEveryThingToLiveAfter10Generations{
+  //     [&forcedState, &force](const Cell& c, const CellularAutomaton& aut) {
+  //         if (aut.getIteration() >= 10) {
+  //             force = true;
+  //         }
+  //         return forcedState;
+  //     },
+  //     [&force]() {
+  //         return force;
+  //     }
+  // };
 
   c.addRule(std::make_shared<ConwaysRule>());
     // .addRule(std::make_shared<LambdaBasedRule>(forceEveryThingToLiveAfter10Generations))
     // .addRule(std::make_shared<LambdaBasedRule>(killEverything));
 
-  // int i = 0;
-
   std::cout << cp;
   while (true) {
     c.update();
-    // ++i;
-    // system("clear"); //FIXME: This is not very portable!
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    system("clear"); //FIXME: This is not very portable!
     std::cout << cp;
-    // std::this_thread::sleep_for(std::chrono::milliseconds(0));
   }
 
   return 0;

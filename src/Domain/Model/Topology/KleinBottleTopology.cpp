@@ -17,11 +17,11 @@
  */
 #include <array>
 #include "Topology.hpp"
-#include "TorusTopology.hpp"
+#include "KleinBottleTopology.hpp"
 #include "../Cell/Cell.hpp"
 #include "../CellularAutomaton/CellularAutomaton.hpp"
 
-NeighborStates TorusTopology::getNeighbors(const Cell& c, const CellularAutomaton& ca) const {
+NeighborStates KleinBottleTopology::getNeighbors(const Cell& c, const CellularAutomaton& ca) const {
   std::array<int, 2> pos{ca.getPosition(c)};
   int n{(pos[0] + ca.getHeight() - 1) % ca.getHeight()};
   int w{(pos[1] + ca.getWidth() - 1) % ca.getWidth()};
@@ -29,13 +29,13 @@ NeighborStates TorusTopology::getNeighbors(const Cell& c, const CellularAutomato
   int s{(pos[0] + ca.getHeight() + 1) % ca.getHeight()};
 
   return NeighborStates {
-    ca.getGrid()->at(n).at(w).getState(),
+    ca.getGrid()->at(pos[1] == 0 ? ca.getHeight() - 1 - n : n).at(w).getState(),
     ca.getGrid()->at(n).at(pos[1]).getState(),
-    ca.getGrid()->at(n).at(e).getState(),
-    ca.getGrid()->at(pos[0]).at(w).getState(),
-    ca.getGrid()->at(pos[0]).at(e).getState(),
-    ca.getGrid()->at(s).at(w).getState(),
+    ca.getGrid()->at(pos[1] == ca.getWidth() - 1 ? ca.getHeight() - 1 - n : n).at(e).getState(),
+    ca.getGrid()->at(pos[1] == 0 ? ca.getHeight() - 1 - pos[0] : pos[0]).at(w).getState(),
+    ca.getGrid()->at(pos[1] == ca.getWidth() - 1 ? ca.getHeight() - 1 - pos[0] : pos[0]).at(e).getState(),
+    ca.getGrid()->at(pos[1] == 0 ? ca.getHeight() - 1 - s : s).at(w).getState(),
     ca.getGrid()->at(s).at(pos[1]).getState(),
-    ca.getGrid()->at(s).at(e).getState()
+    ca.getGrid()->at(pos[1] == ca.getWidth() - 1 ? ca.getHeight() - 1 - s : s).at(e).getState()
   };
 }

@@ -9,6 +9,8 @@
                 "-g",
                 "-fdiagnostics-color=always",
                 "-Wall",
+                "-Wextra",
+                "-Wpedantic",
                 "--std=c++17",
                 "-v",
                 "-I ${fileDirname}/**",

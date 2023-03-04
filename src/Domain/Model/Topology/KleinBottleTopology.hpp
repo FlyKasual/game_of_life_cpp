@@ -15,27 +15,16 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#include <array>
+#ifndef __GOL_KLEIN_BOTTLE_TOPOLOGY_H
+#define __GOL_KLEIN_BOTTLE_TOPOLOGY_H
+
 #include "Topology.hpp"
-#include "TorusTopology.hpp"
 #include "../Cell/Cell.hpp"
 #include "../CellularAutomaton/CellularAutomaton.hpp"
 
-NeighborStates TorusTopology::getNeighbors(const Cell& c, const CellularAutomaton& ca) const {
-  std::array<int, 2> pos{ca.getPosition(c)};
-  int n{(pos[0] + ca.getHeight() - 1) % ca.getHeight()};
-  int w{(pos[1] + ca.getWidth() - 1) % ca.getWidth()};
-  int e{(pos[1] + ca.getWidth() + 1) % ca.getWidth()};
-  int s{(pos[0] + ca.getHeight() + 1) % ca.getHeight()};
+class KleinBottleTopology : public ITopology {
+public:
+  NeighborStates getNeighbors(const Cell&, const CellularAutomaton&) const override;
+};
 
-  return NeighborStates {
-    ca.getGrid()->at(n).at(w).getState(),
-    ca.getGrid()->at(n).at(pos[1]).getState(),
-    ca.getGrid()->at(n).at(e).getState(),
-    ca.getGrid()->at(pos[0]).at(w).getState(),
-    ca.getGrid()->at(pos[0]).at(e).getState(),
-    ca.getGrid()->at(s).at(w).getState(),
-    ca.getGrid()->at(s).at(pos[1]).getState(),
-    ca.getGrid()->at(s).at(e).getState()
-  };
-}
+#endif
