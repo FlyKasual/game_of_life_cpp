@@ -29,8 +29,8 @@ typedef std::function<bool()> LambdaForceRuleFunction;
 class LambdaBasedRule: public IRule
 {
 protected:
-  std::function<Cell::State(const Cell&, const CellularAutomaton&)> application;
-  std::function<bool()> forceRule;
+  LambdaRuleFunction application;
+  LambdaForceRuleFunction forceRule;
 
 public:
   LambdaBasedRule(LambdaRuleFunction apply): LambdaBasedRule{apply, []() { return false; }} {}

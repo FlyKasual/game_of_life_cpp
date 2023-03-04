@@ -32,7 +32,7 @@
 
 int main() {
   KleinBottleTopology top;
-  CellularAutomaton c{top, 150};
+  CellularAutomaton c{top, 40, 80};
   CellularAutomatonPrinter cp{c};
 
   // LambdaBasedRule killEverything{
@@ -64,7 +64,7 @@ int main() {
   std::cout << cp;
   while (true) {
     c.update();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100 / 6));
     system("clear"); //FIXME: This is not very portable!
     std::cout << cp;
   }

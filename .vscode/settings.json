@@ -50,7 +50,8 @@
         "chrono": "cpp",
         "ctime": "cpp",
         "ratio": "cpp",
-        "stop_token": "cpp"
+        "stop_token": "cpp",
+        "map": "cpp"
     },
     "[cpp]": {
         "editor.tabSize": 2
