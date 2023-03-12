@@ -114,4 +114,4 @@ $(OUT_DIR)/%.o: build_dir $(SOURCE_DIR)/%.c
 	$(COMPILE_CPP) -c $(word 2, $^) -o $@
 
 # PHONY targets
-.PHONY: build build_dir execute clean
+.PHONY: all build build_dir execute clean
