@@ -15,20 +15,12 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __CELLULAR_AUTOMATON_PRINTER_H
-#define __CELLULAR_AUTOMATON_PRINTER_H
+#pragma once
 
-#include <iostream>
-#include "../CellularAutomaton/CellularAutomaton.hpp"
+#include "Topology.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
 
-class CellularAutomatonPrinter {
-protected:
-  CellularAutomaton& ca;
-public:
-  CellularAutomatonPrinter() = delete;
-  CellularAutomatonPrinter(CellularAutomaton& ca_) : ca(ca_) {};
-
-  friend std::ostream& operator<<(std::ostream&, const CellularAutomatonPrinter&);
+class TorusTopology : public ITopology {
+  NeighborStates getNeighbors(const Cell&, const CellularAutomaton&) const override;
 };
-
-#endif

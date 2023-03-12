@@ -20,18 +20,18 @@
 #include <array>
 #include <map>
 #include "CellularAutomaton.hpp"
-#include "../Rule/Rule.hpp"
-#include "../Topology/Topology.hpp"
+#include "Rule.hpp"
+#include "Topology.hpp"
 
 CellularAutomaton::CellularAutomaton(ITopology& topology, int width, int height): topology_(topology), width_(width), height_(height) {
-  grid_ = std::make_shared<std::vector<std::vector<Cell>>>(
-    std::vector<std::vector<Cell>>(
+  grid_ = std::make_shared<Grid>(
+    Grid(
       height,
       std::vector<Cell>(width)
     )
   );
-  tmpGrid_ = std::make_shared<std::vector<std::vector<Cell>>>(
-    std::vector<std::vector<Cell>>(
+  tmpGrid_ = std::make_shared<Grid>(
+    Grid(
       height,
       std::vector<Cell>(
         width,

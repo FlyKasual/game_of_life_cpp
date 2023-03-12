@@ -18,8 +18,8 @@
 #include <array>
 #include "Topology.hpp"
 #include "KleinBottleTopology.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
 
 NeighborStates KleinBottleTopology::getNeighbors(const Cell& c, const CellularAutomaton& ca) const {
   std::array<int, 2> pos{ca.getPosition(c)};

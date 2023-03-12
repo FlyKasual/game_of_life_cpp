@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
 #include "ConwaysRule.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
 
 
 Cell::State ConwaysRule::apply(const Cell& c, const CellularAutomaton& aut) {

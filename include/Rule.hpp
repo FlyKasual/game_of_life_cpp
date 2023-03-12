@@ -15,21 +15,14 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __CONWAYS_RULE_H
-#define __CONWAYS_RULE_H
+#pragma once
 
-#include <functional>
-#include "Rule.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
+#include "Cell.hpp"
 
-class ConwaysRule : public IRule {
+class CellularAutomaton; // Forward declare to avoid circular dependency
+
+class IRule {
 public:
-  Cell::State apply(const Cell& c, const CellularAutomaton& aut) override;
-
-  bool enforce() override {
-    return false;
-  }
+  virtual Cell::State apply(const Cell& c, const CellularAutomaton& aut) = 0;
+  virtual bool enforce() = 0;
 };
-
-#endif

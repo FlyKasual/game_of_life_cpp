@@ -15,16 +15,27 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __GOL_KLEIN_BOTTLE_TOPOLOGY_H
-#define __GOL_KLEIN_BOTTLE_TOPOLOGY_H
+#include <iostream>
+#include "CellularAutomatonPrinter.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
 
-#include "Topology.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
-
-class KleinBottleTopology : public ITopology {
-public:
-  NeighborStates getNeighbors(const Cell&, const CellularAutomaton&) const override;
-};
-
-#endif
+std::ostream& operator<<(std::ostream &os, const CellularAutomatonPrinter& cap) {
+  for (const auto& row : *(cap.ca.getGrid())) {
+    for (const auto& cell : row) {
+      switch (cell.getState()) {
+        case Cell::ALIVE:
+          os << "*";
+          break;
+        case Cell::DEAD:
+          os << " ";
+          break;
+        default:
+          os << " ";
+      }
+    }
+    os << '\n';
+  }
+  os << cap.ca.getIteration()<< '\n';
+  return os;
+}

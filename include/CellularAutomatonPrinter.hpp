@@ -15,27 +15,17 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __GOL_TOPOLOGY_H
-#define __GOL_TOPOLOGY_H
+#pragma once
 
-#include "../Cell/Cell.hpp"
+#include <iostream>
+#include "CellularAutomaton.hpp"
 
-class CellularAutomaton; // Forward declaration to avoid curcular includes
-
-struct NeighborStates {
-  Cell::State NW;
-  Cell::State N;
-  Cell::State NE;
-  Cell::State W;
-  Cell::State E;
-  Cell::State SW;
-  Cell::State S;
-  Cell::State SE;
-};
-
-class ITopology {
+class CellularAutomatonPrinter {
+protected:
+  CellularAutomaton& ca;
 public:
-  virtual NeighborStates getNeighbors(const Cell&, const CellularAutomaton&) const = 0;
-};
+  CellularAutomatonPrinter() = delete;
+  CellularAutomatonPrinter(CellularAutomaton& ca_) : ca(ca_) {};
 
-#endif
+  friend std::ostream& operator<<(std::ostream&, const CellularAutomatonPrinter&);
+};

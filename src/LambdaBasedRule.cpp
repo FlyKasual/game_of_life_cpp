@@ -15,27 +15,12 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#include <iostream>
-#include "../CellularAutomatonPrinter/CellularAutomatonPrinter.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
+#include "LambdaBasedRule.hpp"
 
-std::ostream& operator<<(std::ostream &os, const CellularAutomatonPrinter& cap) {
-  for (const auto& row : *(cap.ca.getGrid())) {
-    for (const auto& cell : row) {
-      switch (cell.getState()) {
-        case Cell::ALIVE:
-          os << "*";
-          break;
-        case Cell::DEAD:
-          os << " ";
-          break;
-        default:
-          os << " ";
-      }
-    }
-    os << '\n';
-  }
-  os << cap.ca.getIteration()<< '\n';
-  return os;
+Cell::State LambdaBasedRule::apply(const Cell& c, const CellularAutomaton& aut) {
+  return application(c, aut);
+}
+
+bool LambdaBasedRule::enforce() {
+  return forceRule();
 }

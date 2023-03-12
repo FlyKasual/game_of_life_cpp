@@ -15,15 +15,18 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __GOL_TORUS_TOPOLOGY_H
-#define __GOL_TORUS_TOPOLOGY_H
+#pragma once
 
-#include "Topology.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
+#include <functional>
+#include "Rule.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
 
-class TorusTopology : public ITopology {
-  NeighborStates getNeighbors(const Cell&, const CellularAutomaton&) const override;
+class ConwaysRule : public IRule {
+public:
+  Cell::State apply(const Cell& c, const CellularAutomaton& aut) override;
+
+  bool enforce() override {
+    return false;
+  }
 };
-
-#endif

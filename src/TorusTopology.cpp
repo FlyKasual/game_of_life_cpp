@@ -18,8 +18,8 @@
 #include <array>
 #include "Topology.hpp"
 #include "TorusTopology.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
 
 NeighborStates TorusTopology::getNeighbors(const Cell& c, const CellularAutomaton& ca) const {
   std::array<int, 2> pos{ca.getPosition(c)};

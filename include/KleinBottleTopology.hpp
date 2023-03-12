@@ -15,16 +15,13 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __RULE_H
-#define __RULE_H
+#pragma once
 
-#include "../Cell/Cell.hpp"
+#include "Topology.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
 
-class CellularAutomaton; // Forward declare to avoid circular dependency
-
-class IRule {
+class KleinBottleTopology : public ITopology {
 public:
-  virtual Cell::State apply(const Cell& c, const CellularAutomaton& aut) = 0;
-  virtual bool enforce() = 0;
+  NeighborStates getNeighbors(const Cell&, const CellularAutomaton&) const override;
 };
-#endif

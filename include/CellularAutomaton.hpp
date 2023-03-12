@@ -15,24 +15,25 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __CELLULAR_AUTOMATON_H
-#define __CELLULAR_AUTOMATON_H
+#pragma once
 
 #include <vector>
 #include <memory>
 #include <array>
 #include <map>
-#include "../Cell/Cell.hpp"
-#include "../Rule/Rule.hpp"
-#include "../Topology/Topology.hpp"
+#include "Cell.hpp"
+#include "Rule.hpp"
+#include "Topology.hpp"
+
+typedef std::vector<std::vector<Cell>> Grid;
 
 class CellularAutomaton {
 protected:
   ITopology& topology_;
   int width_;
   int height_;
-  std::shared_ptr<std::vector<std::vector<Cell>>> grid_;
-  std::shared_ptr<std::vector<std::vector<Cell>>> tmpGrid_;
+  std::shared_ptr<Grid> grid_;
+  std::shared_ptr<Grid> tmpGrid_;
   int iteration_ = 0;
   std::vector<std::shared_ptr<IRule>> rules;
   std::map<const Cell* const, std::array<int, 2>> positionCache_;
@@ -47,7 +48,7 @@ public:
     return height_;
   }
 
-  std::shared_ptr<std::vector<std::vector<Cell>>> getGrid() const {
+  std::shared_ptr<Grid> getGrid() const {
     return grid_;
   }
 
@@ -61,5 +62,3 @@ public:
   void update();
   std::array<int, 2> getPosition(const Cell&) const;
 };
-
-#endif

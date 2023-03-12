@@ -21,14 +21,14 @@
 #include <stdlib.h>
 #include <chrono>
 #include <thread>
-#include "Domain/Model/Cell/Cell.hpp"
-#include "Domain/Model/CellularAutomaton/CellularAutomaton.hpp"
-#include "Domain/Model/CellularAutomatonPrinter/CellularAutomatonPrinter.hpp"
-#include "Domain/Model/Rule/Rule.hpp"
-#include "Domain/Model/Rule/LambdaBasedRule.hpp"
-#include "Domain/Model/Topology/TorusTopology.hpp"
-#include "Domain/Model/Topology/KleinBottleTopology.hpp"
-#include "Domain/Model/Rule/ConwaysRule.hpp"
+#include "Cell.hpp"
+#include "CellularAutomaton.hpp"
+#include "CellularAutomatonPrinter.hpp"
+#include "Rule.hpp"
+#include "LambdaBasedRule.hpp"
+#include "TorusTopology.hpp"
+#include "KleinBottleTopology.hpp"
+#include "ConwaysRule.hpp"
 
 int main() {
   KleinBottleTopology top;

@@ -15,37 +15,28 @@
  *
  * You should have received a copy of the GNU General Public License along with the game_of_life_cpp project. If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef __LAMBDA_BASED_RULE_H
-#define __LAMBDA_BASED_RULE_H
+#pragma once
 
-#include <functional>
-#include "Rule.hpp"
-#include "../Cell/Cell.hpp"
-#include "../CellularAutomaton/CellularAutomaton.hpp"
-
-typedef std::function<Cell::State(const Cell&, const CellularAutomaton&)> LambdaRuleFunction;
-typedef std::function<bool()> LambdaForceRuleFunction;
-
-class LambdaBasedRule: public IRule
-{
-protected:
-  LambdaRuleFunction application;
-  LambdaForceRuleFunction forceRule;
-
+class Cell {
 public:
-  LambdaBasedRule(LambdaRuleFunction apply): LambdaBasedRule{apply, []() { return false; }} {}
-  LambdaBasedRule(
-    LambdaRuleFunction apply,
-    LambdaForceRuleFunction force
-  ): application(apply), forceRule(force) {}
+  enum State {
+    ALIVE,
+    DEAD
+  };
+  Cell(): Cell{DEAD} {}
+  Cell(Cell::State state): state_(state) {}
 
-  Cell::State apply(const Cell& c, const CellularAutomaton& aut) override {
-    return application(c, aut);
+  State getState() const {
+    return state_;
   }
 
-  bool enforce() override {
-    return forceRule();
+  Cell& setState(State state) {
+    state_ = state;
+
+    return *this;
   }
+protected:
+  State state_;
 };
 
-#endif
+bool operator==(const Cell&, const Cell&);
